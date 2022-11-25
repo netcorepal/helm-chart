@@ -1,9 +1,9 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ include "ingress-controller.serviceAccountName" . }}
+  name: {{ include "netcorepal-ingress-controller.serviceAccountName" . }}
   labels:
-    {{- include "ingress-controller.labels" . | nindent 4 }}
+    {{- include "netcorepal-ingress-controller.labels" . | nindent 4 }}
 rules:
 - apiGroups:
   - ""
@@ -26,6 +26,7 @@ rules:
   - ""
   resources:
   - services
+  - services/status
   verbs:
   - get
   - list
@@ -55,4 +56,7 @@ rules:
   resources:
   - ingresses/status
   verbs:
+  - get
+  - list
   - update
+  - patch

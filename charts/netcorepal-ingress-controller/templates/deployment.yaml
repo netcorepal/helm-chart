@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ingress-controller.fullname" . }}
+  name: {{ include "netcorepal-ingress-controller.fullname" . }}
   labels:
-    {{- include "ingress-controller.labels" . | nindent 4 }}
+    {{- include "netcorepal-ingress-controller.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "ingress-controller.selectorLabels" . | nindent 6 }}
+      {{- include "netcorepal-ingress-controller.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "ingress-controller.selectorLabels" . | nindent 8 }}
+        {{- include "netcorepal-ingress-controller.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "ingress-controller.serviceAccountName" . }}
+      serviceAccountName: {{ include "netcorepal-ingress-controller.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -34,25 +34,41 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 8000
-              name: proxy
+            - name: http
+              containerPort: 80
               protocol: TCP
-            - containerPort: 8443
-              name: proxy-ssl
+            - name: https
+              containerPort: 443
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
-              port: proxy
+              port: http
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
           readinessProbe:
             httpGet:
               path: /healthz
-              port: proxy
+              port: http
+            initialDelaySeconds: 1
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          env:
-          - name: ASPNETCORE_URLS
-            value: http://*:8000
           volumeMounts:
             - name: config
               readOnly: true
@@ -60,7 +76,7 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: {{ include "ingress-controller.fullname" . }}
+            name: {{ include "netcorepal-ingress-controller.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
