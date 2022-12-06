@@ -3,6 +3,16 @@ entries:
   netcorepal-ingress-controller:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2022-12-06T03:49:19.326419633Z"
+    description: A Helm chart for Kubernetes
+    digest: 3b9cfcecbd757d3e92db10cff8276feb7d2bda7bffec430a603a629e453ada12
+    name: netcorepal-ingress-controller
+    type: application
+    urls:
+    - https://github.com/netcorepal/helm-charts/releases/download/netcorepal-ingress-controller-1.0.6/netcorepal-ingress-controller-1.0.6.tgz
+    version: 1.0.6
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2022-11-29T15:21:44.761049645Z"
     description: A Helm chart for Kubernetes
     digest: e2e820274932f8b8cd285acb6464ee1577c814a67dc1bc5272f38d7ea31634c8
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://github.com/netcorepal/helm-charts/releases/download/netcorepal-ingress-controller-1.0.2/netcorepal-ingress-controller-1.0.2.tgz
     version: 1.0.2
-generated: "2022-11-29T15:21:44.761070245Z"
+generated: "2022-12-06T03:49:19.326441834Z"
