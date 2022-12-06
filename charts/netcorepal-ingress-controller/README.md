@@ -1,10 +1,40 @@
 
 # NetCorePal Ingress Controller
 
+## How to install
+
+
+
 ```shell
 helm repo add netcorepal https://netcorepal.github.io/helm-charts/
 helm repo update
-helm install my-ingress-controller netcorepal/netcorepal-ingress-controller
+
+# Install a `NetCorePal Ingress Controller` use release name `myrelease`.
+helm install myrelease netcorepal/netcorepal-ingress-controller   
+```
+
+## Ingress Sample
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-service-name
+  namespace: default
+spec:
+  ingressClassName: myrelease  # Default use your helm release name 
+  rules:
+  - host: backend.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: backend-service-name
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+
 ```
 
 ## Chart Configuration Options
