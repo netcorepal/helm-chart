@@ -9,11 +9,8 @@ helm repo add netcorepal https://netcorepal.github.io/helm-charts/
 
 ## NetCorePal Ingress Controller
 
-
-
-
 ```shell
 helm install my-ingress-controller netcorepal/netcorepal-ingress-controller
 ```
 
-See [netcorepal-ingress-controller](/charts/netcorepal-ingress-controller)
+Chart configuration options see [netcorepal-ingress-controller](/charts/netcorepal-ingress-controller).
