@@ -10,7 +10,8 @@ data:
       "Logging": {
         "LogLevel": {
           "Default": "Information",
-          "Microsoft.AspNetCore": "Information"
+          "Microsoft.AspNetCore": "Information",
+          "Yarp": "Debug"
         }
       },
       "Yarp": {
