@@ -7,6 +7,12 @@ metadata:
 data:
   yarp.json: |
     {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft.AspNetCore": "Information"
+        }
+      },
       "Yarp": {
         "ControllerClass": "netcorepal.com/{{ .Values.yarp.controllerClass | default .Release.Name }}",
         "ServerCertificates": {{ .Values.yarp.serverCertificates }},
